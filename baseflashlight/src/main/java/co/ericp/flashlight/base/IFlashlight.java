@@ -1,4 +1,4 @@
-package co.ericp.baseFlashlight;
+package co.ericp.flashlight.base;
 
 public interface IFlashlight {
     void turnOn();
