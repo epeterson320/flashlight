@@ -1,8 +1,10 @@
 package co.ericp.flashlight;
 
-import co.ericp.flashlight.base.IFlashlight;
+import co.ericp.flashlight.core.IFlashlight;
 
-class FlashlightImpl implements IFlashlight {
+/** Interface to the camera */
+public class FlashlightImpl implements IFlashlight {
+
     public void turnOn() {
 
     }

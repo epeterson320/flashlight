@@ -1,1 +1,1 @@
-include ':torchFlashlight', ':legacyTorchFlashlight', ':screenFlashlight', ':baseflashlight'
+include ':torchFlashlight', ':legacyTorchFlashlight', ':screenFlashlight', ':core'

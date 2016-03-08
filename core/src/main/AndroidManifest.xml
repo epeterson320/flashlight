@@ -1,8 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="co.ericp.flashlight">
-
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera.flash" />
+    package="co.ericp.flashlight.core">
 
     <application
         android:allowBackup="true"
