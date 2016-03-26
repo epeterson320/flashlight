@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Flashlight</string>
+    <string name="no_camera">This device doesn\'t support the camera.</string>
+    <string name="not_available">The flashlight is not available.</string>
+</resources>
