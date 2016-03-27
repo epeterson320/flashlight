@@ -23,3 +23,5 @@ turns it off. Other features include:
 * No animations
 * No screens
 * No brightness control
+
+Launcher icon created by Eli Revzin.
