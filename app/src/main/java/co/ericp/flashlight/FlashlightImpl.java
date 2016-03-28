@@ -31,10 +31,10 @@ import android.widget.Toast;
 @TargetApi(Build.VERSION_CODES.M)
 public class FlashlightImpl implements Flashlight {
 
-    Application app;
-    CameraManager cameraManager;
-    String cameraId;
-    boolean isOn;
+    private final Application app;
+    private final CameraManager cameraManager;
+    private String cameraId;
+    private boolean isOn;
 
     public FlashlightImpl(Context c) {
         app = (Application) c.getApplicationContext();
@@ -59,15 +59,13 @@ public class FlashlightImpl implements Flashlight {
     }
 
     @Override
-    public boolean toggle() {
+    public void toggle() {
         try {
             cameraManager.setTorchMode(cameraId, !isOn);
             isOn = !isOn;
             if (!isOn) FlashlightProvider.clear();
-            return isOn;
         } catch (CameraAccessException e) {
             Toast.makeText(app, R.string.not_available, Toast.LENGTH_LONG).show();
-            return false;
         }
     }
 }

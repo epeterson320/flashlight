@@ -22,8 +22,6 @@ package co.ericp.flashlight;
 public interface Flashlight {
     /**
      * Toggle the flashlight on or off.
-     *
-     * @return true if the flashlight is now on.
      */
-    boolean toggle();
+    void toggle();
 }

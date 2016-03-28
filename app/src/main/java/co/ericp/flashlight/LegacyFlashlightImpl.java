@@ -27,6 +27,7 @@ import android.widget.Toast;
  * A {@link Flashlight} implemented for APIs 5 to 22.
  */
 @TargetApi(Build.VERSION_CODES.ECLAIR)
+@SuppressWarnings("deprecation")
 public class LegacyFlashlightImpl implements Flashlight {
 
     private Camera camera;
@@ -53,20 +54,16 @@ public class LegacyFlashlightImpl implements Flashlight {
 
     /**
      * Toggle the flashlight on or off.
-     *
-     * @return true if the flashlight is now on.
      */
     @Override
-    public boolean toggle() {
+    public void toggle() {
         if (isOn) {
             camera.release();
             FlashlightProvider.clear();
-            return false;
         } else {
             features.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
             camera.setParameters(features);
             isOn = true;
-            return true;
         }
     }
 }

@@ -22,7 +22,7 @@ import android.os.Build;
 /**
  * The interface to the flashlight.
  */
-public class FlashlightProvider {
+class FlashlightProvider {
     private static volatile Flashlight singleton;
 
     public static Flashlight getInstance(Context c) {

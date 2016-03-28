@@ -14,7 +14,7 @@
 > A designer knows he has achieved perfection not when there is nothing left to
 > add, but when there is nothing left to take away.
 >
-> Antoine de Saint-Exupery
+> Antoine de Saint-Exupéry
 
 Most flashlight apps consist of a launcher icon that, when clicked, opens a
 screen that looks like a flashlight, and turns on your device's flashlight. If
