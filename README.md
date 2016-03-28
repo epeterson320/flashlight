@@ -22,12 +22,23 @@ include:
 * No posts to Facebook
 * No animations
 * No screens
+* No ads
 * No brightness control
 * No notifications
 * No Chromecast integration
 * Not optimized for tablets
 
-Unfortunately, Occam's Flashlight was not able to avoid all features. It will
-fit in an app folder.
+"A designer knows he has achieved perfection not when there is nothing left to
+add, but when there is nothing left to take away."
+- Antoine de Saint-Exupery
 
-Launcher icon created by Eli Revzin.
+The launcher icon, "Occam's Flashlight Launcher", is a derivative of ["PL Light
+Bulb"](https://thenounproject.com/term/pl-light-bulb/98503/) by
+[Eli Revzin](https://thenounproject.com/erdstudio.digi/) from [The Noun
+Project](https://thenounproject.com). "Occam's Flashlight Launcher" is licensed
+under [CC BY](https://creativecommons.org/licenses/by/4.0/) by Eric Peterson.
+
+
+Light Bulb by Sarah Tan from the Noun Project
+
+https://wiki.creativecommons.org/wiki/Best_practices_for_attribution
