@@ -34,19 +34,11 @@ launcher again turns off the flashlight. Other features include:
 
 ### Legal
 
-The launcher icon, "Occam's Flashlight Launcher", is a derivative of ["PL Light
-Bulb"](https://thenounproject.com/term/pl-light-bulb/98503/) by
-[Eli Revzin](https://thenounproject.com/erdstudio.digi/) from [The Noun
-Project](https://thenounproject.com). "Occam's Flashlight Launcher" is licensed
-under [CC BY](https://creativecommons.org/licenses/by/4.0/) by Eric Peterson.
-
 Copyright 2016 Eric Peterson.
 
-This app is open-source, licensed under the
-[Apache License](http://www.apache.org/licenses/LICENSE-2.0).
+The launcher icon is a derivative of "Light Bulb" by [Sarah
+Tan](https://thenounproject.com/liminalitycc/).
 
-Alternate icon:
-
-Light Bulb by Sarah Tan from the Noun Project
-
-https://wiki.creativecommons.org/wiki/Best_practices_for_attribution
+The source code is available at https://github.com/epeterson320/flashlight
+and licensed under the [Apache
+License](http://www.apache.org/licenses/LICENSE-2.0).
