@@ -16,12 +16,11 @@
 >
 > Antoine de Saint-Exupéry
 
-Most flashlight apps consist of a launcher icon that, when clicked, opens a
-screen that looks like a flashlight, and turns on your device's flashlight. If
-you think that is WAY too complicated, Occam's Flashlight is for you. Occam's
-flashlight is a non-award winning app that consists of an icon that, when
-clicked, launches NO screen and turns on your device's flashlight. Touching the
-launcher again turns off the flashlight. Other features include:
+Most flashlight apps feature a screen that looks like a flashlight and can
+turn on and off your device's flashlight. If you think that is WAY too
+complicated, Occam's Flashlight is for you. Occam's flashlight consists of an
+icon that launches NO screen and can turn on and off your device's flashlight
+just by tapping the launcher icon. Other features include:
 
 * No posts to Facebook
 * No animations
@@ -31,14 +30,18 @@ launcher again turns off the flashlight. Other features include:
 * No notifications
 * No Chromecast integration
 * Not optimized for tablets
+* Winner of zero awards
+
+This is the simplest possible flashlight. A 2MB photo takes 15 times as much
+storage as the app.
 
 ### Legal
 
 Copyright 2016 Eric Peterson.
 
-The launcher icon is a derivative of "Light Bulb" by [Sarah
-Tan](https://thenounproject.com/liminalitycc/).
+The launcher icon is a derivative of "Light Bulb" by
+[Sarah Tan](https://thenounproject.com/liminalitycc/).
 
 The source code is available at https://github.com/epeterson320/flashlight
-and licensed under the [Apache
-License](http://www.apache.org/licenses/LICENSE-2.0).
+and licensed under the
+[Apache License](http://www.apache.org/licenses/LICENSE-2.0).
