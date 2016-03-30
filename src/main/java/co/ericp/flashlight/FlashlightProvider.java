@@ -25,7 +25,7 @@ import android.os.Build;
 class FlashlightProvider {
     private static volatile Flashlight singleton;
 
-    public static Flashlight getInstance(Context c) {
+    static Flashlight getInstance(Context c) {
         if (singleton == null) {
             synchronized (FlashlightProvider.class) {
                 if (singleton == null) {
@@ -40,7 +40,7 @@ class FlashlightProvider {
         return singleton;
     }
 
-    public static void clear() {
+    static void clear() {
         singleton = null;
     }
 }

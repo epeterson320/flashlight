@@ -25,7 +25,7 @@ import android.os.Bundle;
 public class MainActivity extends Activity {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FlashlightProvider.getInstance(this).toggle();
         finish();

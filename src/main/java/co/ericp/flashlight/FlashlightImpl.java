@@ -32,7 +32,7 @@ import android.widget.Toast;
  * A {@link Flashlight} for the current API.
  */
 @TargetApi(Build.VERSION_CODES.M)
-public class FlashlightImpl implements Flashlight {
+class FlashlightImpl implements Flashlight {
 
     private final Application app;
     private final CameraManager cameraManager;
@@ -48,7 +48,7 @@ public class FlashlightImpl implements Flashlight {
         }
     };
 
-    public FlashlightImpl(Context c) {
+    FlashlightImpl(Context c) {
         app = (Application) c.getApplicationContext();
         cameraManager = (CameraManager) app.getSystemService(Context.CAMERA_SERVICE);
 

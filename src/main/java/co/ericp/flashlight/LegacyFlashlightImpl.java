@@ -28,13 +28,13 @@ import android.widget.Toast;
  */
 @TargetApi(Build.VERSION_CODES.ECLAIR)
 @SuppressWarnings("deprecation")
-public class LegacyFlashlightImpl implements Flashlight {
+class LegacyFlashlightImpl implements Flashlight {
 
     private Camera camera;
     private Camera.Parameters features;
     private boolean isOn = false;
 
-    public LegacyFlashlightImpl(Context c) {
+    LegacyFlashlightImpl(Context c) {
         Context context = c.getApplicationContext();
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
             try {
