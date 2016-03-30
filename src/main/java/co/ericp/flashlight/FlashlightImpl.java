@@ -26,6 +26,7 @@ import android.hardware.camera2.CameraManager.TorchCallback;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 /**
@@ -41,7 +42,7 @@ class FlashlightImpl implements Flashlight {
 
     private final TorchCallback torchCallback = new TorchCallback() {
         @Override
-        public void onTorchModeChanged(String cameraId, boolean enabled) {
+        public void onTorchModeChanged(@NonNull String cameraId, boolean enabled) {
             if (cameraId.equals(FlashlightImpl.this.cameraId)) {
                 isOn = enabled;
             }
