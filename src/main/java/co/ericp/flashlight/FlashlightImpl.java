@@ -22,7 +22,10 @@ import android.content.Context;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.CameraManager.TorchCallback;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 /**
@@ -35,6 +38,15 @@ public class FlashlightImpl implements Flashlight {
     private final CameraManager cameraManager;
     private String cameraId;
     private boolean isOn;
+
+    private final TorchCallback torchCallback = new TorchCallback() {
+        @Override
+        public void onTorchModeChanged(String cameraId, boolean enabled) {
+            if (cameraId.equals(FlashlightImpl.this.cameraId)) {
+                isOn = enabled;
+            }
+        }
+    };
 
     public FlashlightImpl(Context c) {
         app = (Application) c.getApplicationContext();
@@ -53,6 +65,11 @@ public class FlashlightImpl implements Flashlight {
                     break;
                 }
             }
+
+            Handler callbackHandler = new Handler(Looper.getMainLooper());
+
+            cameraManager.registerTorchCallback(torchCallback, callbackHandler);
+
         } catch (CameraAccessException e) {
             Toast.makeText(c, R.string.not_available, Toast.LENGTH_LONG).show();
         }
@@ -63,7 +80,10 @@ public class FlashlightImpl implements Flashlight {
         try {
             cameraManager.setTorchMode(cameraId, !isOn);
             isOn = !isOn;
-            if (!isOn) FlashlightProvider.clear();
+            if (!isOn) {
+                FlashlightProvider.clear();
+                cameraManager.unregisterTorchCallback(torchCallback);
+            }
         } catch (CameraAccessException e) {
             Toast.makeText(app, R.string.not_available, Toast.LENGTH_LONG).show();
         }
