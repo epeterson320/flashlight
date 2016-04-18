@@ -34,7 +34,7 @@ import static org.mockito.Mockito.verify;
 public class MainActivityTest {
 
     @Rule
-    public ActivityTestRule<MainActivity> activityRule =
+    public final ActivityTestRule<MainActivity> activityRule =
             new ActivityTestRule<>(MainActivity.class, false, false);
 
     @Test

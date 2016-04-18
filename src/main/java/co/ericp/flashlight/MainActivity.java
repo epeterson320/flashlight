@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         try {
             FlashlightProvider.getInstance(this).toggle();
-        } catch (CameraUnavailableException e) {
+        } catch (FlashlightUnavailableException e) {
             Toast.makeText(getApplicationContext(), R.string.not_available, Toast.LENGTH_LONG)
                     .show();
         }

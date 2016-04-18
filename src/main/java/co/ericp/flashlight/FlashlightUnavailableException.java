@@ -16,5 +16,5 @@
 
 package co.ericp.flashlight;
 
-class CameraUnavailableException extends Exception {
+class FlashlightUnavailableException extends Exception {
 }

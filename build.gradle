@@ -18,7 +18,6 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "co.ericp.flashlight"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         minSdkVersion 8

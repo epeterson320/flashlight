@@ -34,7 +34,7 @@ class FlashlightImpl implements Flashlight {
 
     private final CameraManager cameraManager;
     private String cameraId;
-    private boolean isOn;
+    private boolean isOn = false;
 
     private final TorchCallback torchCallback = new TorchCallback() {
         @Override
@@ -45,7 +45,7 @@ class FlashlightImpl implements Flashlight {
         }
     };
 
-    FlashlightImpl(CameraManager cm) throws CameraUnavailableException {
+    FlashlightImpl(CameraManager cm) throws FlashlightUnavailableException {
         cameraManager = cm;
         try {
             for (String id : cameraManager.getCameraIdList()) {
@@ -66,12 +66,12 @@ class FlashlightImpl implements Flashlight {
             cameraManager.registerTorchCallback(torchCallback, callbackHandler);
 
         } catch (CameraAccessException e) {
-            throw new CameraUnavailableException();
+            throw new FlashlightUnavailableException();
         }
     }
 
     @Override
-    public void toggle() throws CameraUnavailableException {
+    public void toggle() throws FlashlightUnavailableException {
         try {
             cameraManager.setTorchMode(cameraId, !isOn);
             isOn = !isOn;
@@ -80,7 +80,7 @@ class FlashlightImpl implements Flashlight {
                 cameraManager.unregisterTorchCallback(torchCallback);
             }
         } catch (CameraAccessException e) {
-            throw new CameraUnavailableException();
+            throw new FlashlightUnavailableException();
         }
     }
 }

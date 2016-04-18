@@ -18,23 +18,33 @@ package co.ericp.flashlight;
 
 import android.annotation.TargetApi;
 import android.hardware.Camera;
-import android.os.Build;
+import android.hardware.Camera.Parameters;
+
+import java.util.List;
+
+import static android.hardware.Camera.Parameters.FLASH_MODE_TORCH;
+import static android.os.Build.VERSION_CODES.FROYO;
 
 /**
- * A {@link Flashlight} implemented for APIs 5 to 22.
+ * A {@link Flashlight} implemented for APIs 8 to 22.
+ *
+ * This is compatible back to API 5, but the testing libraries have problems
+ * with API 5.
  */
-@TargetApi(Build.VERSION_CODES.ECLAIR)
+@TargetApi(FROYO)
 @SuppressWarnings("deprecation")
 class LegacyFlashlightImpl implements Flashlight {
 
     private final Camera camera;
 
-    LegacyFlashlightImpl(Camera c) throws CameraUnavailableException {
+    LegacyFlashlightImpl(Camera c) throws FlashlightUnavailableException {
         camera = c;
 
-        if (!camera.getParameters().getSupportedFlashModes()
-                .contains(Camera.Parameters.FLASH_MODE_TORCH)) {
-            throw new CameraUnavailableException();
+        List<String> flashModes =
+                camera.getParameters().getSupportedFlashModes();
+
+        if (flashModes == null || !flashModes.contains(FLASH_MODE_TORCH)) {
+            throw new FlashlightUnavailableException();
         }
     }
 
@@ -43,21 +53,22 @@ class LegacyFlashlightImpl implements Flashlight {
      */
     @Override
     public void toggle() {
-        if (isOn()) {
-            turnOff();
-        } else {
-            turnOn();
-        }
+//        /*if (isOn()) {
+//            turnOff();
+//        } else {
+//            turnOn();
+//        }*/
     }
 
     private boolean isOn() {
-        return camera.getParameters().getFlashMode()
-                .equals(Camera.Parameters.FLASH_MODE_TORCH);
+        return camera.getParameters()
+                .getFlashMode()
+                .equals(FLASH_MODE_TORCH);
     }
 
     private void turnOn() {
-        Camera.Parameters parameters = camera.getParameters();
-        parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        Parameters parameters = camera.getParameters();
+        parameters.setFlashMode(FLASH_MODE_TORCH);
         camera.setParameters(parameters);
     }
 

@@ -16,13 +16,42 @@
 
 package co.ericp.flashlight;
 
+import android.hardware.Camera;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
 
+import org.junit.After;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.hardware.Camera.Parameters.FLASH_MODE_TORCH;
+import static org.junit.Assert.assertEquals;
+
 @RunWith(AndroidJUnit4.class)
+@SuppressWarnings("deprecation")
 @SmallTest
 public class LegacyFlashlightImplTest {
-    //TODO
+
+    private Camera camera;
+
+    @Test
+    public void turnsOnCamera() throws Exception {
+        //TODO get this working
+        camera = Camera.open();
+        Flashlight flashlight = new LegacyFlashlightImpl(camera);
+
+        flashlight.toggle();
+
+        String flashMode = camera.getParameters().getFlashMode();
+        assertEquals(flashMode, FLASH_MODE_TORCH);
+    }
+
+    @After
+    public void releaseCamera() {
+        try {
+            camera.release();
+        } catch (RuntimeException e) {
+            // Ignore
+        }
+    }
 }

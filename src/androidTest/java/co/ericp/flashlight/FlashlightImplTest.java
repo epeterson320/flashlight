@@ -16,13 +16,34 @@
 
 package co.ericp.flashlight;
 
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.hardware.camera2.CameraManager;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.filters.SdkSuppress;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class FlashlightImplTest {
-    //TODO
+
+    @Test
+    @SdkSuppress(minSdkVersion = 23)
+    @TargetApi(23)
+    public void turnsOnFlashlight() throws Exception {
+        Context c = InstrumentationRegistry.getTargetContext();
+
+        CameraManager cm = (CameraManager) c.getSystemService(Context.CAMERA_SERVICE);
+
+        Flashlight flashlight = new FlashlightImpl(cm);
+
+        flashlight.toggle();
+
+        //TODO verify torch is on
+    }
+
 }
