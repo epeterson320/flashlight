@@ -18,6 +18,7 @@ package co.ericp.flashlight;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 /**
  * The (invisible) activity launched by the launcher icon.
@@ -27,7 +28,12 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FlashlightProvider.getInstance(this).toggle();
+        try {
+            FlashlightProvider.getInstance(this).toggle();
+        } catch (CameraUnavailableException e) {
+            Toast.makeText(getApplicationContext(), R.string.not_available, Toast.LENGTH_LONG)
+                    .show();
+        }
         finish();
     }
 

@@ -17,26 +17,38 @@
 package co.ericp.flashlight;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.hardware.Camera;
+import android.hardware.camera2.CameraManager;
 import android.os.Build;
 
 /**
  * The interface to the flashlight.
+ *
+ * Not thread-safe, so call it from the main thread only.
  */
 class FlashlightProvider {
-    private static volatile Flashlight singleton;
+    static Flashlight singleton;
 
-    static Flashlight getInstance(Context c) {
+    static Flashlight getInstance(Context c) throws CameraUnavailableException {
         if (singleton == null) {
-            synchronized (FlashlightProvider.class) {
-                if (singleton == null) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        singleton = new FlashlightImpl(c);
-                    } else {
-                        singleton = new LegacyFlashlightImpl(c);
-                    }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                CameraManager cm = (CameraManager) c.getSystemService(Context.CAMERA_SERVICE);
+                singleton = new FlashlightImpl(cm);
+
+            } else if (c.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+                try {
+                    @SuppressWarnings("deprecation")
+                    Camera camera = Camera.open();
+                    singleton = new LegacyFlashlightImpl(camera);
+                } catch (RuntimeException e) {
+                    throw new CameraUnavailableException();
                 }
+            } else {
+                throw new CameraUnavailableException();
             }
         }
+
         return singleton;
     }
 

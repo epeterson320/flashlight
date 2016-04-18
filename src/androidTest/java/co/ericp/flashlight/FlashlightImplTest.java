@@ -16,17 +16,13 @@
 
 package co.ericp.flashlight;
 
-/**
- * Interface to the device flashlight.
- */
-interface Flashlight {
-    /**
-     * Toggle the flashlight on or off.
-     */
-    void toggle() throws CameraUnavailableException;
+import android.support.test.runner.AndroidJUnit4;
+import android.test.suitebuilder.annotation.SmallTest;
 
-    // Nice-to-have methods:
-    // boolean isOn() throws CameraUnavailableException;
-    // void turnOn() throws CameraUnavailableException;
-    // void turnOff() throws CameraUnavailableException;
+import org.junit.runner.RunWith;
+
+@RunWith(AndroidJUnit4.class)
+@SmallTest
+public class FlashlightImplTest {
+    //TODO
 }

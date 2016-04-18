@@ -33,7 +33,7 @@ import static org.junit.Assert.assertThat;
 public class FlashlightProviderTest {
 
     @Test
-    public void providesCorrectImpl() {
+    public void providesCorrectImpl() throws Exception {
         Context ctx = InstrumentationRegistry.getTargetContext();
         Flashlight flashlight = FlashlightProvider.getInstance(ctx);
 

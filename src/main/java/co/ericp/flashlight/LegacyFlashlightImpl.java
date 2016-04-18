@@ -17,11 +17,8 @@
 package co.ericp.flashlight;
 
 import android.annotation.TargetApi;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Build;
-import android.widget.Toast;
 
 /**
  * A {@link Flashlight} implemented for APIs 5 to 22.
@@ -30,25 +27,14 @@ import android.widget.Toast;
 @SuppressWarnings("deprecation")
 class LegacyFlashlightImpl implements Flashlight {
 
-    private Camera camera;
-    private Camera.Parameters features;
-    private boolean isOn = false;
+    private final Camera camera;
 
-    LegacyFlashlightImpl(Context c) {
-        Context context = c.getApplicationContext();
-        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-            try {
-                camera = Camera.open();
-                features = camera.getParameters();
-                if (!features.getSupportedFlashModes().contains(Camera.Parameters.FLASH_MODE_TORCH)) {
-                    Toast.makeText(context, R.string.not_available, Toast.LENGTH_LONG).show();
-                }
-            } catch (RuntimeException e) {
-                Toast.makeText(context, R.string.not_available, Toast.LENGTH_LONG).show();
-            }
-        } else {
+    LegacyFlashlightImpl(Camera c) throws CameraUnavailableException {
+        camera = c;
 
-            Toast.makeText(context, R.string.no_camera, Toast.LENGTH_LONG).show();
+        if (!camera.getParameters().getSupportedFlashModes()
+                .contains(Camera.Parameters.FLASH_MODE_TORCH)) {
+            throw new CameraUnavailableException();
         }
     }
 
@@ -57,13 +43,26 @@ class LegacyFlashlightImpl implements Flashlight {
      */
     @Override
     public void toggle() {
-        if (isOn) {
-            camera.release();
-            FlashlightProvider.clear();
+        if (isOn()) {
+            turnOff();
         } else {
-            features.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-            camera.setParameters(features);
-            isOn = true;
+            turnOn();
         }
+    }
+
+    private boolean isOn() {
+        return camera.getParameters().getFlashMode()
+                .equals(Camera.Parameters.FLASH_MODE_TORCH);
+    }
+
+    private void turnOn() {
+        Camera.Parameters parameters = camera.getParameters();
+        parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        camera.setParameters(parameters);
+    }
+
+    private void turnOff() {
+        camera.release();
+        FlashlightProvider.clear();
     }
 }

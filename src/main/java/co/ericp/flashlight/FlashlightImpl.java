@@ -17,8 +17,6 @@
 package co.ericp.flashlight;
 
 import android.annotation.TargetApi;
-import android.app.Application;
-import android.content.Context;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
@@ -27,7 +25,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
-import android.widget.Toast;
 
 /**
  * A {@link Flashlight} for the current API.
@@ -35,7 +32,6 @@ import android.widget.Toast;
 @TargetApi(Build.VERSION_CODES.M)
 class FlashlightImpl implements Flashlight {
 
-    private final Application app;
     private final CameraManager cameraManager;
     private String cameraId;
     private boolean isOn;
@@ -49,10 +45,8 @@ class FlashlightImpl implements Flashlight {
         }
     };
 
-    FlashlightImpl(Context c) {
-        app = (Application) c.getApplicationContext();
-        cameraManager = (CameraManager) app.getSystemService(Context.CAMERA_SERVICE);
-
+    FlashlightImpl(CameraManager cm) throws CameraUnavailableException {
+        cameraManager = cm;
         try {
             for (String id : cameraManager.getCameraIdList()) {
                 CameraCharacteristics characteristics =
@@ -72,12 +66,12 @@ class FlashlightImpl implements Flashlight {
             cameraManager.registerTorchCallback(torchCallback, callbackHandler);
 
         } catch (CameraAccessException e) {
-            Toast.makeText(c, R.string.not_available, Toast.LENGTH_LONG).show();
+            throw new CameraUnavailableException();
         }
     }
 
     @Override
-    public void toggle() {
+    public void toggle() throws CameraUnavailableException {
         try {
             cameraManager.setTorchMode(cameraId, !isOn);
             isOn = !isOn;
@@ -86,7 +80,7 @@ class FlashlightImpl implements Flashlight {
                 cameraManager.unregisterTorchCallback(torchCallback);
             }
         } catch (CameraAccessException e) {
-            Toast.makeText(app, R.string.not_available, Toast.LENGTH_LONG).show();
+            throw new CameraUnavailableException();
         }
     }
 }
