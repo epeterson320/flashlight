@@ -61,6 +61,10 @@ class FlashlightImpl implements Flashlight {
                 }
             }
 
+            if (cameraId == null) {
+                throw new FlashlightUnavailableException();
+            }
+
             Handler callbackHandler = new Handler(Looper.getMainLooper());
 
             cameraManager.registerTorchCallback(torchCallback, callbackHandler);

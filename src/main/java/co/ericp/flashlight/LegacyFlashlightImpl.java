@@ -53,11 +53,11 @@ class LegacyFlashlightImpl implements Flashlight {
      */
     @Override
     public void toggle() {
-//        /*if (isOn()) {
-//            turnOff();
-//        } else {
-//            turnOn();
-//        }*/
+        if (isOn()) {
+            turnOff();
+        } else {
+            turnOn();
+        }
     }
 
     private boolean isOn() {
