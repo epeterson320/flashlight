@@ -32,9 +32,9 @@ import android.support.annotation.NonNull;
 @TargetApi(Build.VERSION_CODES.M)
 class FlashlightImpl implements Flashlight {
 
-    private final CameraManager cameraManager;
-    private String cameraId;
-    private boolean isOn = false;
+    final CameraManager cameraManager;
+    String cameraId;
+    boolean isOn = false;
 
     private final TorchCallback torchCallback = new TorchCallback() {
         @Override
@@ -81,10 +81,14 @@ class FlashlightImpl implements Flashlight {
             isOn = !isOn;
             if (!isOn) {
                 FlashlightProvider.clear();
-                cameraManager.unregisterTorchCallback(torchCallback);
             }
         } catch (CameraAccessException e) {
             throw new FlashlightUnavailableException();
         }
+    }
+
+    @Override
+    public void release() {
+        cameraManager.unregisterTorchCallback(torchCallback);
     }
 }

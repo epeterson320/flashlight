@@ -25,6 +25,7 @@ interface Flashlight {
      */
     void toggle() throws FlashlightUnavailableException;
 
+    void release();
     // Nice-to-have methods:
     // boolean isOn() throws CameraUnavailableException;
     // void turnOn() throws CameraUnavailableException;

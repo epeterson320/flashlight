@@ -22,6 +22,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -42,5 +43,10 @@ public class FlashlightProviderTest {
                 : LegacyFlashlightImpl.class;
 
         assertThat(flashlight, instanceOf(expectedClass));
+    }
+
+    @After
+    public void clear() {
+        FlashlightProvider.clear();
     }
 }

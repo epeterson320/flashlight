@@ -56,6 +56,9 @@ class FlashlightProvider {
     }
 
     static void clear() {
-        singleton = null;
+        if (singleton != null) {
+            singleton.release();
+            singleton = null;
+        }
     }
 }

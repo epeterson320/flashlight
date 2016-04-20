@@ -17,27 +17,37 @@
 package co.ericp.flashlight;
 
 import android.hardware.Camera;
+import android.os.Build;
+import android.support.test.filters.RequiresDevice;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.hardware.Camera.Parameters.FLASH_MODE_TORCH;
+import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeThat;
 
 @RunWith(AndroidJUnit4.class)
 @SuppressWarnings("deprecation")
-@SmallTest
+@RequiresDevice
 public class LegacyFlashlightImplTest {
 
-    private Camera camera;
+    Camera camera;
+
+    @Before
+    public void getCamera() {
+        assumeThat(Build.VERSION.SDK_INT, lessThan(Build.VERSION_CODES.M));
+        camera = Camera.open();
+    }
 
     @Test
-    public void turnsOnCamera() throws Exception {
-        //TODO get this working
-        camera = Camera.open();
+    public void turnsOnCamera() throws FlashlightUnavailableException {
         Flashlight flashlight = new LegacyFlashlightImpl(camera);
 
         flashlight.toggle();
@@ -47,11 +57,9 @@ public class LegacyFlashlightImplTest {
     }
 
     @After
-    public void releaseCamera() {
-        try {
+    public void releaseCamera() throws Exception {
+        if (camera != null) {
             camera.release();
-        } catch (RuntimeException e) {
-            // Ignore
         }
     }
 }

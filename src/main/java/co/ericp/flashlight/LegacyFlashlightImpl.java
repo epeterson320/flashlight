@@ -60,6 +60,11 @@ class LegacyFlashlightImpl implements Flashlight {
         }
     }
 
+    @Override
+    public void release() {
+        camera.release();
+    }
+
     private boolean isOn() {
         return camera.getParameters()
                 .getFlashMode()
@@ -73,7 +78,6 @@ class LegacyFlashlightImpl implements Flashlight {
     }
 
     private void turnOff() {
-        camera.release();
         FlashlightProvider.clear();
     }
 }

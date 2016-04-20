@@ -21,6 +21,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.MediumTest;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,17 +34,21 @@ import static org.mockito.Mockito.verify;
 @MediumTest
 public class MainActivityTest {
 
+    Flashlight mockedFlashlight;
+
     @Rule
     public final ActivityTestRule<MainActivity> activityRule =
             new ActivityTestRule<>(MainActivity.class, false, false);
 
+    @Before
+    public void mockFlashlight() {
+        mockedFlashlight = mock(Flashlight.class);
+        FlashlightProvider.singleton = mockedFlashlight;
+    }
+
     @Test
     public void callsToggle() throws Exception {
-        Flashlight mockedFlashlight = mock(Flashlight.class);
-        FlashlightProvider.singleton = mockedFlashlight;
-
         activityRule.launchActivity(null);
-
         verify(mockedFlashlight).toggle();
     }
 
