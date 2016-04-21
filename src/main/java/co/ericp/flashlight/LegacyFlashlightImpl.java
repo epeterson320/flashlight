@@ -22,6 +22,7 @@ import android.hardware.Camera.Parameters;
 
 import java.util.List;
 
+import static android.hardware.Camera.Parameters.FLASH_MODE_OFF;
 import static android.hardware.Camera.Parameters.FLASH_MODE_TORCH;
 import static android.os.Build.VERSION_CODES.FROYO;
 
@@ -78,6 +79,9 @@ class LegacyFlashlightImpl implements Flashlight {
     }
 
     private void turnOff() {
+        Parameters parameters = camera.getParameters();
+        parameters.setFlashMode(FLASH_MODE_OFF);
+        camera.setParameters(parameters);
         FlashlightProvider.clear();
     }
 }
