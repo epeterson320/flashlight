@@ -18,8 +18,11 @@ package co.ericp.flashlight;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.CameraManager.TorchCallback;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.RequiresDevice;
 import android.support.test.filters.SdkSuppress;
@@ -42,6 +45,8 @@ public class FlashlightImplTest {
 
     CameraManager cm;
     String id;
+    boolean isOn = false;
+    boolean awaitingCallback = false;
 
     @Before
     public void getCameraManager() {
@@ -52,14 +57,31 @@ public class FlashlightImplTest {
 
     @Test
     public void turnsOnFlashlight() throws Exception {
-
+        // Given a flashlight
         FlashlightImpl flashlight = new FlashlightImpl(cm);
+        id = flashlight.cameraId;
 
+        // When I toggle the flashlight
         flashlight.toggle();
 
-        assertTrue(flashlight.isOn);
+        // Then the flashlight should be on.
+        awaitingCallback = true;
+        BackgroundThread backgroundThread = new BackgroundThread();
+        backgroundThread.start();
+        synchronized (this) {
+            while (backgroundThread.handler == null) {
+                wait(500L);
+            }
+        }
+        cm.registerTorchCallback(torchCallback, backgroundThread.handler);
 
-        //TODO test external state, not internal state
+        while (awaitingCallback) {
+            synchronized (this) {
+                wait(500L);
+            }
+        }
+
+        assertTrue(isOn);
     }
 
     @After
@@ -69,14 +91,38 @@ public class FlashlightImplTest {
 
     @After
     public void shutdownFlash() throws Exception {
-        for (String id : cm.getCameraIdList()) {
-            Boolean hasCamera = cm
-                    .getCameraCharacteristics(id)
-                    .get(CameraCharacteristics.FLASH_INFO_AVAILABLE);
+        cm.setTorchMode(id, false);
+    }
 
-            if (hasCamera != null && hasCamera) {
-                cm.setTorchMode(id, false);
+    @After
+    public void unregisterCallback() {
+        cm.unregisterTorchCallback(torchCallback);
+    }
+
+    TorchCallback torchCallback = new TorchCallback() {
+        @Override
+        public void onTorchModeChanged(@NonNull String cameraId, boolean enabled) {
+            if (cameraId.equals(id)) {
+                isOn = enabled;
+                awaitingCallback = false;
+                synchronized (FlashlightImplTest.this) {
+                    FlashlightImplTest.this.notifyAll();
+                }
             }
+        }
+    };
+
+    private class BackgroundThread extends Thread {
+        Handler handler;
+
+        @Override
+        public void run() {
+            Looper.prepare();
+            handler = new Handler();
+            synchronized (FlashlightImplTest.this) {
+                FlashlightImplTest.this.notifyAll();
+            }
+            Looper.loop();
         }
     }
 }
