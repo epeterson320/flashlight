@@ -16,17 +16,23 @@
 
 package co.ericp.flashlight;
 
+import android.hardware.Camera;
+import android.os.Build;
+import android.provider.Settings;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.MediumTest;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -56,6 +62,24 @@ public class MainActivityTest {
     public void finishesAutomatically() throws Exception {
         MainActivity activity = activityRule.launchActivity(null);
         assertTrue(activity.isFinishing());
+    }
+
+    @Test
+    public void retainsCameraAfterGC() throws Exception {
+        assumeThat(Build.VERSION.SDK_INT, lessThan(Build.VERSION_CODES.M)); // Legacy test only
+
+        activityRule.launchActivity(null);
+        Thread.sleep(500);
+
+        System.gc();
+        Thread.sleep(1500);
+
+        try {
+            Camera.open();
+            Assert.fail("Camera should not be available");
+        } catch (RuntimeException e) {
+            // Pass
+        }
     }
 
     @After
