@@ -6,5 +6,5 @@ dependencies:
 test:
   override:
     - ./gradlew assembleRelease -PdisablePreDex
-    - cp -r flashlight/build/outputs $CIRCLE_ARTIFACTS
+    - cp -r build/outputs $CIRCLE_ARTIFACTS
 #todo: add deployment config: master branch to play beta track?
