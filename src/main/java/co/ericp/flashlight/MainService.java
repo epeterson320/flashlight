@@ -26,9 +26,9 @@ import android.widget.Toast;
  */
 public class MainService extends Service {
 
-    Flashlight flashlight;
+    private Flashlight flashlight;
 
-    int startedCount = 0;
+    private int startedCount = 0;
 
     @Override
     public void onCreate() {

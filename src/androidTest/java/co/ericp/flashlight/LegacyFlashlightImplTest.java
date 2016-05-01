@@ -20,7 +20,6 @@ import android.hardware.Camera;
 import android.os.Build;
 import android.support.test.filters.RequiresDevice;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.suitebuilder.annotation.SmallTest;
 
 import org.junit.After;
 import org.junit.Before;
@@ -30,7 +29,6 @@ import org.junit.runner.RunWith;
 import static android.hardware.Camera.Parameters.FLASH_MODE_TORCH;
 import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeThat;
 
 @RunWith(AndroidJUnit4.class)
@@ -38,7 +36,7 @@ import static org.junit.Assume.assumeThat;
 @RequiresDevice
 public class LegacyFlashlightImplTest {
 
-    Camera camera;
+    private Camera camera;
 
     @Before
     public void getCamera() {

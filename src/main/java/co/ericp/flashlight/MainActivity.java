@@ -19,7 +19,6 @@ package co.ericp.flashlight;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 /**
  * The (invisible) activity launched by the launcher icon.

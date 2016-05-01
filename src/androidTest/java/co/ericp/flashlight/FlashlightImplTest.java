@@ -43,10 +43,10 @@ import static org.junit.Assert.*;
 @SmallTest
 public class FlashlightImplTest {
 
-    CameraManager cm;
-    String id;
-    boolean isOn = false;
-    boolean awaitingCallback = false;
+    private CameraManager cm;
+    private String id;
+    private boolean isOn = false;
+    private boolean awaitingCallback = false;
 
     @Before
     public void getCameraManager() {
@@ -99,7 +99,7 @@ public class FlashlightImplTest {
         cm.unregisterTorchCallback(torchCallback);
     }
 
-    TorchCallback torchCallback = new TorchCallback() {
+    private final TorchCallback torchCallback = new TorchCallback() {
         @Override
         public void onTorchModeChanged(@NonNull String cameraId, boolean enabled) {
             if (cameraId.equals(id)) {

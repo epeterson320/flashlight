@@ -30,7 +30,7 @@ import static android.content.pm.PackageManager.FEATURE_CAMERA;
  * Not thread-safe, so call it from the main thread only.
  */
 class FlashlightProvider {
-    static Flashlight singleton;
+    private static Flashlight singleton;
 
     static Flashlight getInstance(Context c) throws FlashlightUnavailableException {
         if (singleton == null) {
