@@ -3,8 +3,8 @@ dependencies:
     - echo y | android update sdk --no-ui --all --filter "tools"
     - echo y | android update sdk --no-ui --all --filter "build-tools-23.0.3"
     - echo y | android update sdk --no-ui --all --filter "extra-android-m2repository"
-  test:
-    override:
-      - ./gradlew assembleRelease -PdisablePreDex
-      - cp -r flashlight/build/outputs $CIRCLE_ARTIFACTS
+test:
+  override:
+    - ./gradlew assembleRelease -PdisablePreDex
+    - cp -r flashlight/build/outputs $CIRCLE_ARTIFACTS
 #todo: add deployment config: master branch to play beta track?
