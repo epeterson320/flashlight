@@ -44,6 +44,11 @@
                 <data android:scheme="flashlight" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".MainService"
+            android:exported="false" />
+
     </application>
 
 </manifest>
