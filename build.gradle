@@ -51,6 +51,7 @@ play {
     serviceAccountEmail = 'epeterson320@gmail.com'
     jsonFile = file('keys.json')
     track = "${track}"
+    uploadImages = true
 }
 
 dependencies {
