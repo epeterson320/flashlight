@@ -7,15 +7,14 @@ test:
   override:
     - ./gradlew assembleRelease
     - cp -r build/outputs $CIRCLE_ARTIFACTS
-# Uncomment this (and fix any bugs that may appear) once the first APK is in production
-#deployment:
-#  production:
-#    branch: master
-#    commands:
-#      - ./gradlew publishApkRelease
-#        -Dorg.gradle.project.track=production
-#  beta:
-#    branch: develop
-#    commands:
-#      - ./gradlew publishApkRelease
-#        -Dorg.gradle.project.track=beta
+deployment:
+  production:
+    branch: master
+    commands:
+      - ./gradlew publishApkRelease
+        -Dorg.gradle.project.track=production
+  beta:
+    branch: develop
+    commands:
+      - ./gradlew publishApkRelease
+        -Dorg.gradle.project.track=beta
