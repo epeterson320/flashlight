@@ -11,10 +11,8 @@ deployment:
   production:
     branch: master
     commands:
-      - ./gradlew publishApkRelease
-        -Dorg.gradle.project.track=production
+      - ./gradlew publishApkRelease -Dorg.gradle.project.track=production
   beta:
     branch: develop
     commands:
-      - ./gradlew publishApkRelease
-        -Dorg.gradle.project.track=beta
+      - ./gradlew publishApkRelease -Dorg.gradle.project.track=beta
