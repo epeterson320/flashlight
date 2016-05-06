@@ -21,7 +21,7 @@ import android.content.Context;
 import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CameraManager.TorchCallback;
 import android.os.Handler;
-import android.os.Looper;
+import android.os.HandlerThread;
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.RequiresDevice;
@@ -61,19 +61,17 @@ public class FlashlightImplTest {
         FlashlightImpl flashlight = new FlashlightImpl(cm);
         id = flashlight.cameraId;
 
-        // When I toggle the flashlight
-        flashlight.toggle();
+        // When I turn on the flashlight
+        flashlight.setFlashlight(true);
 
         // Then the flashlight should be on.
+        HandlerThread callbackThread = new HandlerThread("torchCallback");
+        callbackThread.start();
+
+        Handler callbackHandler = new Handler(callbackThread.getLooper());
+
         awaitingCallback = true;
-        BackgroundThread backgroundThread = new BackgroundThread();
-        backgroundThread.start();
-        synchronized (this) {
-            while (backgroundThread.handler == null) {
-                wait(500L);
-            }
-        }
-        cm.registerTorchCallback(torchCallback, backgroundThread.handler);
+        cm.registerTorchCallback(torchCallback, callbackHandler);
 
         while (awaitingCallback) {
             synchronized (this) {
@@ -111,18 +109,4 @@ public class FlashlightImplTest {
             }
         }
     };
-
-    private class BackgroundThread extends Thread {
-        Handler handler;
-
-        @Override
-        public void run() {
-            Looper.prepare();
-            handler = new Handler();
-            synchronized (FlashlightImplTest.this) {
-                FlashlightImplTest.this.notifyAll();
-            }
-            Looper.loop();
-        }
-    }
 }

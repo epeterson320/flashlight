@@ -38,27 +38,24 @@ class LegacyFlashlightImpl implements Flashlight {
 
     private final Camera camera;
 
-    LegacyFlashlightImpl(Camera c) throws FlashlightUnavailableException {
+    LegacyFlashlightImpl(Camera c) throws Flashlight.UnavailableException {
         camera = c;
 
-        List<String> flashModes =
-                camera.getParameters().getSupportedFlashModes();
+        List<String> flashModes = camera
+                .getParameters()
+                .getSupportedFlashModes();
 
         if (flashModes == null || !flashModes.contains(FLASH_MODE_TORCH)) {
-            throw new FlashlightUnavailableException();
+            throw new Flashlight.UnavailableException();
         }
     }
 
-    /**
-     * Toggle the flashlight on or off.
-     */
     @Override
-    public void toggle() {
-        if (isOn()) {
-            turnOff();
-        } else {
-            turnOn();
-        }
+    public void setFlashlight(boolean enabled) {
+        String flashMode = (enabled) ? FLASH_MODE_TORCH : FLASH_MODE_OFF;
+        Parameters parameters = camera.getParameters();
+        parameters.setFlashMode(flashMode);
+        camera.setParameters(parameters);
     }
 
     @Override
@@ -66,22 +63,10 @@ class LegacyFlashlightImpl implements Flashlight {
         camera.release();
     }
 
-    private boolean isOn() {
+    public boolean isOn() {
         return camera.getParameters()
                 .getFlashMode()
                 .equals(FLASH_MODE_TORCH);
     }
 
-    private void turnOn() {
-        Parameters parameters = camera.getParameters();
-        parameters.setFlashMode(FLASH_MODE_TORCH);
-        camera.setParameters(parameters);
-    }
-
-    private void turnOff() {
-        Parameters parameters = camera.getParameters();
-        parameters.setFlashMode(FLASH_MODE_OFF);
-        camera.setParameters(parameters);
-        FlashlightProvider.clear();
-    }
 }

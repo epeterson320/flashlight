@@ -45,17 +45,17 @@ public class LegacyFlashlightImplTest {
     }
 
     @Test
-    public void turnsOnCamera() throws FlashlightUnavailableException {
+    public void turnsOnCamera() throws Flashlight.UnavailableException {
         Flashlight flashlight = new LegacyFlashlightImpl(camera);
 
-        flashlight.toggle();
+        flashlight.setFlashlight(true);
 
         String flashMode = camera.getParameters().getFlashMode();
         assertEquals(flashMode, FLASH_MODE_TORCH);
     }
 
     @After
-    public void releaseCamera() throws Exception {
+    public void releaseCamera() {
         if (camera != null) {
             camera.release();
         }

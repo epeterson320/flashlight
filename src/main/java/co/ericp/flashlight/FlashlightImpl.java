@@ -20,11 +20,7 @@ import android.annotation.TargetApi;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
-import android.hardware.camera2.CameraManager.TorchCallback;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.annotation.NonNull;
 
 /**
  * A {@link Flashlight} for the current API.
@@ -34,18 +30,8 @@ class FlashlightImpl implements Flashlight {
 
     private final CameraManager cameraManager;
     String cameraId;
-    private boolean isOn = false;
 
-    private final TorchCallback torchCallback = new TorchCallback() {
-        @Override
-        public void onTorchModeChanged(@NonNull String cameraId, boolean enabled) {
-            if (cameraId.equals(FlashlightImpl.this.cameraId)) {
-                isOn = enabled;
-            }
-        }
-    };
-
-    FlashlightImpl(CameraManager cm) throws FlashlightUnavailableException {
+    FlashlightImpl(CameraManager cm) throws Flashlight.UnavailableException {
         cameraManager = cm;
         try {
             for (String id : cameraManager.getCameraIdList()) {
@@ -62,33 +48,24 @@ class FlashlightImpl implements Flashlight {
             }
 
             if (cameraId == null) {
-                throw new FlashlightUnavailableException();
+                throw new Flashlight.UnavailableException();
             }
 
-            Handler callbackHandler = new Handler(Looper.getMainLooper());
-
-            cameraManager.registerTorchCallback(torchCallback, callbackHandler);
-
         } catch (CameraAccessException e) {
-            throw new FlashlightUnavailableException();
+            throw new Flashlight.UnavailableException();
         }
     }
 
     @Override
-    public void toggle() throws FlashlightUnavailableException {
+    public void setFlashlight(boolean enabled) throws Flashlight.UnavailableException {
         try {
-            cameraManager.setTorchMode(cameraId, !isOn);
-            isOn = !isOn;
-            if (!isOn) {
-                FlashlightProvider.clear();
-            }
+            cameraManager.setTorchMode(cameraId, enabled);
         } catch (CameraAccessException e) {
-            throw new FlashlightUnavailableException();
+            throw new Flashlight.UnavailableException();
         }
     }
 
     @Override
     public void release() {
-        cameraManager.unregisterTorchCallback(torchCallback);
     }
 }

@@ -20,6 +20,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.test.suitebuilder.annotation.MediumTest;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,9 +36,13 @@ public class MainActivityTest {
             new ActivityTestRule<>(MainActivity.class, false, false);
 
     @Test
-    public void finishesAutomatically() throws Exception {
+    public void finishesAutomatically() {
         MainActivity activity = activityRule.launchActivity(null);
         assertTrue(activity.isFinishing());
     }
 
+    @After
+    public void releaseFlashlight() {
+        FlashlightProvider.clear();
+    }
 }

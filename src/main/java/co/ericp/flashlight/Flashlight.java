@@ -20,14 +20,11 @@ package co.ericp.flashlight;
  * Interface to the device flashlight.
  */
 interface Flashlight {
-    /**
-     * Toggle the flashlight on or off.
-     */
-    void toggle() throws FlashlightUnavailableException;
+
+    void setFlashlight(boolean enabled) throws UnavailableException;
 
     void release();
-    // Nice-to-have methods:
-    // boolean isOn() throws CameraUnavailableException;
-    // void turnOn() throws CameraUnavailableException;
-    // void turnOff() throws CameraUnavailableException;
+
+    class UnavailableException extends Exception {}
+
 }

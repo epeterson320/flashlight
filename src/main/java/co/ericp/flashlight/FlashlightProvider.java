@@ -32,7 +32,7 @@ import static android.content.pm.PackageManager.FEATURE_CAMERA;
 class FlashlightProvider {
     private static Flashlight singleton;
 
-    static Flashlight getInstance(Context c) throws FlashlightUnavailableException {
+    static Flashlight getInstance(Context c) throws Flashlight.UnavailableException {
         if (singleton == null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 CameraManager cm =
@@ -45,10 +45,10 @@ class FlashlightProvider {
                     Camera camera = Camera.open();
                     singleton = new LegacyFlashlightImpl(camera);
                 } catch (RuntimeException e) {
-                    throw new FlashlightUnavailableException();
+                    throw new Flashlight.UnavailableException();
                 }
             } else {
-                throw new FlashlightUnavailableException();
+                throw new Flashlight.UnavailableException();
             }
         }
 

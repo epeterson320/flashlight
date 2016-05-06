@@ -34,7 +34,7 @@ public class MainService extends Service {
     public void onCreate() {
         try {
             flashlight = FlashlightProvider.getInstance(this);
-        } catch (FlashlightUnavailableException e) {
+        } catch (Flashlight.UnavailableException e) {
             Toast.makeText(getApplicationContext(),
                     R.string.not_available, Toast.LENGTH_LONG)
                     .show();
@@ -44,21 +44,29 @@ public class MainService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
-            flashlight.toggle();
-        } catch (FlashlightUnavailableException e) {
+            boolean shouldEnable = (startedCount == 0);
+
+            flashlight.setFlashlight(shouldEnable);
+
+            startedCount++;
+
+        } catch (Flashlight.UnavailableException e) {
             Toast.makeText(getApplicationContext(),
                     R.string.not_available, Toast.LENGTH_LONG)
                     .show();
             stopSelf();
         }
 
-        startedCount++;
-
         if (startedCount > 1) {
             stopSelf();
         }
 
         return START_NOT_STICKY;
+    }
+
+    @Override
+    public Binder onBind(Intent i) {
+        return null;
     }
 
     @Override
@@ -72,8 +80,4 @@ public class MainService extends Service {
         FlashlightProvider.clear();
     }
 
-    @Override
-    public Binder onBind(Intent i) {
-        return null;
-    }
 }
