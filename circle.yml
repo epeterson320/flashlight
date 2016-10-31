@@ -7,12 +7,4 @@ test:
   override:
     - ./gradlew assembleRelease
     - cp -r build/outputs $CIRCLE_ARTIFACTS
-deployment:
-  production:
-    branch: master
-    commands:
-      - ./gradlew publishApkRelease -Dorg.gradle.project.track=production
-  beta:
-    branch: develop
-    commands:
-      - ./gradlew publishApkRelease -Dorg.gradle.project.track=beta
+
