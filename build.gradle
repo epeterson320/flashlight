@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.android.tools.build:gradle:2.3.0'
         classpath 'com.github.triplet.gradle:play-publisher:1.1.4'
     }
 }
@@ -16,14 +16,14 @@ repositories {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         minSdkVersion 8
-        targetSdkVersion 23
+        targetSdkVersion 25
 
         versionCode 2
         versionName "1.0"
@@ -55,11 +55,11 @@ play {
 }
 
 dependencies {
-    compile 'com.android.support:support-annotations:23.3.0'
-    androidTestCompile 'com.android.support:support-annotations:23.3.0'
-    androidTestCompile 'com.android.support.test:runner:0.4.1'
-    androidTestCompile 'com.android.support.test:rules:0.4.1'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+    compile 'com.android.support:support-annotations:25.3.1'
+    androidTestCompile 'com.android.support:support-annotations:25.3.1'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     //androidTestCompile 'org.mockito:mockito-core:1.10.19'
     //androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
     //androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
