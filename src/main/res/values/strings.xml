@@ -17,4 +17,7 @@
     <string name="app_name">Flashlight</string>
     <string name="not_available">The flashlight is not available.</string>
     <string name="low_memory">Low memory. Flashlight shut down by system.</string>
+    <string name="notification_title">Flashlight</string>
+    <string name="notification_text">Flashlight is On</string>
+    <string name="notification_action_text">Turn Off</string>
 </resources>

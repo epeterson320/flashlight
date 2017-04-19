@@ -16,9 +16,12 @@
 
 package co.ericp.flashlight;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.support.v7.app.NotificationCompat;
 import android.widget.Toast;
 
 /**
@@ -29,11 +32,35 @@ public class MainService extends Service {
     private Flashlight flashlight;
 
     private int startedCount = 0;
+    private static int ID = 1;
 
     @Override
     public void onCreate() {
         try {
             flashlight = FlashlightProvider.getInstance(this);
+
+            Intent intent = new Intent(this, MainService.class);
+            PendingIntent pendingIntent = PendingIntent.getService(this, ID, intent, 0x00);
+            NotificationCompat.Action action = new NotificationCompat.Action.Builder(
+                    R.drawable.ic_power_48dp,
+                    getString(R.string.notification_action_text),
+                    pendingIntent)
+                    .build();
+
+            Notification notification = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle(getString(R.string.notification_title))
+                    .setContentText(getString(R.string.notification_text))
+                    .addAction(action)
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                    .setStyle(new NotificationCompat.MediaStyle()
+                        .setShowActionsInCompactView(0)
+                    )
+                    .setCategory(NotificationCompat.CATEGORY_SERVICE)
+                    .setCustomBigContentView(null)
+                    .build();
+
+            startForeground(ID, notification);
         } catch (Flashlight.UnavailableException e) {
             Toast.makeText(getApplicationContext(),
                     R.string.not_available, Toast.LENGTH_LONG)
@@ -45,9 +72,7 @@ public class MainService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
             boolean shouldEnable = (startedCount == 0);
-
             flashlight.setFlashlight(shouldEnable);
-
             startedCount++;
 
         } catch (Flashlight.UnavailableException e) {
