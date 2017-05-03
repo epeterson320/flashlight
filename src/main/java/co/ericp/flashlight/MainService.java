@@ -20,6 +20,8 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Binder;
 import android.support.v7.app.NotificationCompat;
 import android.widget.Toast;
@@ -47,8 +49,11 @@ public class MainService extends Service {
                     pendingIntent)
                     .build();
 
+            Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+
             Notification notification = new NotificationCompat.Builder(this)
-                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setSmallIcon(R.drawable.ic_notif_white)
+                    .setLargeIcon(largeIcon)
                     .setContentTitle(getString(R.string.notification_title))
                     .setContentText(getString(R.string.notification_text))
                     .addAction(action)
