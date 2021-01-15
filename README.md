@@ -1,3 +1,5 @@
+**Archived:** This functionality is now built in to Android.
+
 # Occam's Flashlight
 
 [![Circle CI](https://circleci.com/gh/epeterson320/flashlight.svg?style=shield)](https://circleci.com/gh/epeterson320/flashlight)
